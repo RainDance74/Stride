@@ -1,3 +1,3 @@
 ﻿namespace Stride.Domain.Entities;
 
-public interface IUser<TKey> : IHasKey<TKey> { }
+public interface IUser<TKey> : IHasKey<TKey>;
