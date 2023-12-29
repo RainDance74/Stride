@@ -24,7 +24,9 @@ public static class DependencyInjection
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
-            options.UseNpgsql(connectionString);
+            options
+            .UseNpgsql(connectionString)
+            .UseSnakeCaseNamingConvention();
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
