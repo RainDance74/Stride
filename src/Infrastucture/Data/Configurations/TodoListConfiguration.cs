@@ -13,11 +13,6 @@ public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
         builder.Property(i => i.Title)
             .HasMaxLength(50);
 
-        builder
-            .HasOne<ApplicationUser>()
-            .WithMany()
-            .HasForeignKey(e => e.Owner);
-
         builder.ConfigureManageable();
     }
 }
