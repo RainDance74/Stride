@@ -1,14 +1,14 @@
 ﻿namespace Stride.Domain.Entities;
 
-public class TodoItem : BaseAuditableEntity<int>
+public class TodoItem : BaseManageableEntity
 {
     private bool _done;
 
-    public string? Title { get; set; }
+    public string Title { get; set; } = null!;
 
     public string? Description { get; set; }
 
-    public IUser<string>? Creator { get; set; }
+    public TodoList TodoList { get; set; } = null!;
 
     public bool Done
     {
