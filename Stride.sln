@@ -14,9 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Application\Application.csproj", "{AD0677A8-81C2-4231-863D-F877FE66F631}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastucture", "src\Infrastucture\Infrastucture.csproj", "{3F7EFDAA-EC77-4B40-A7D8-A82747813D96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastucture\Infrastructure.csproj", "{3F7EFDAA-EC77-4B40-A7D8-A82747813D96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{BF2F7A8D-E6F2-420D-893B-61941AC81240}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "src\Web\Web.csproj", "{BF2F7A8D-E6F2-420D-893B-61941AC81240}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
