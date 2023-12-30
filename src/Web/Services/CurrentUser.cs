@@ -1,7 +1,7 @@
 ﻿using Stride.Application.Common.Interfaces;
 using System.Security.Claims;
 
-namespace Web.Services;
+namespace Stride.Web.Services;
 
 public class CurrentUser(IHttpContextAccessor httpContextAccessor) : IUser
 {

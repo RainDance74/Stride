@@ -1,5 +1,5 @@
 ﻿using Stride.Application.Common.Interfaces;
-using Web.Services;
+using Stride.Web.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
