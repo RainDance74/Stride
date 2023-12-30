@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Stride.Application.Common.Interfaces;
-using Stride.Infrastucture.Data;
+using Stride.Infrastructure.Data;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

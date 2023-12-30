@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stride.Domain.Entities;
-using Stride.Infrastucture.Identity;
+using Stride.Infrastructure.Identity;
 
-namespace Stride.Infrastucture.Data.Configurations;
+namespace Stride.Infrastructure.Data.Configurations;
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)

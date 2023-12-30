@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stride.Domain.Common;
 using Stride.Domain.Entities;
-using Stride.Infrastucture.Identity;
+using Stride.Infrastructure.Identity;
 
-namespace Stride.Infrastucture.Data.Configurations;
+namespace Stride.Infrastructure.Data.Configurations;
 
 public static class DefaultManageableEntityConfiguration
 {

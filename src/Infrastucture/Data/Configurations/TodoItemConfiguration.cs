@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stride.Domain.Entities;
 
-namespace Stride.Infrastucture.Data.Configurations;
+namespace Stride.Infrastructure.Data.Configurations;
 
 public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
 {

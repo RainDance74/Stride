@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Stride.Infrastucture.Data;
+using Stride.Infrastructure.Data;
 
 #nullable disable
 
-namespace Stride.Infrastucture.Data.Migrations
+namespace Stride.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20231229091227_InitialCreate")]
@@ -319,7 +319,7 @@ namespace Stride.Infrastucture.Data.Migrations
                     b.ToTable("stride_users", (string)null);
                 });
 
-            modelBuilder.Entity("Stride.Infrastucture.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("Stride.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -411,7 +411,7 @@ namespace Stride.Infrastucture.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Stride.Infrastucture.Identity.ApplicationUser", null)
+                    b.HasOne("Stride.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -421,7 +421,7 @@ namespace Stride.Infrastucture.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Stride.Infrastucture.Identity.ApplicationUser", null)
+                    b.HasOne("Stride.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -438,7 +438,7 @@ namespace Stride.Infrastucture.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id");
 
-                    b.HasOne("Stride.Infrastucture.Identity.ApplicationUser", null)
+                    b.HasOne("Stride.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -448,7 +448,7 @@ namespace Stride.Infrastucture.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Stride.Infrastucture.Identity.ApplicationUser", null)
+                    b.HasOne("Stride.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -512,11 +512,11 @@ namespace Stride.Infrastucture.Data.Migrations
                     b.Navigation("UpdatedBy");
                 });
 
-            modelBuilder.Entity("Stride.Infrastucture.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("Stride.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.HasOne("Stride.Domain.Entities.User", null)
                         .WithOne()
-                        .HasForeignKey("Stride.Infrastucture.Identity.ApplicationUser", "Id")
+                        .HasForeignKey("Stride.Infrastructure.Identity.ApplicationUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_users_stride_users_id");

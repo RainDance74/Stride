@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Stride.Application.Common.Interfaces;
 using Stride.Domain.Entities;
-using Stride.Infrastucture.Identity;
+using Stride.Infrastructure.Identity;
 using System.Reflection;
 
-namespace Stride.Infrastucture.Data;
+namespace Stride.Infrastructure.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options), IApplicationDbContext
 {

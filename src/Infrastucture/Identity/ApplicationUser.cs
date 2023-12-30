@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Stride.Infrastucture.Identity;
+namespace Stride.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser;
