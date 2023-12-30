@@ -10,9 +10,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionStringEnvironmentKey = configuration.GetConnectionString("EnvironmentKey");
-        // TODO: Add null checking 👇👆
+        var connectionStringEnvironmentKey = configuration.GetConnectionString("EnvironmentKey") 
+            ?? throw new ArgumentNullException("A key for system variable of your connection string was not found in the appsettings.");
         var connectionString = Environment.GetEnvironmentVariable(connectionStringEnvironmentKey, EnvironmentVariableTarget.User);
+
+        Guard.Against.Null(connectionString, message: $"Connection string was not found. " 
+            + $"First, create a variable for \"{connectionStringEnvironmentKey}\" and put your connection string there.");
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
