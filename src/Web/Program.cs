@@ -6,15 +6,22 @@ builder.Services.AddWebServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if(app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseSwaggerUi(settings =>
+{
+    settings.Path = "/api";
+    settings.DocumentPath = "/api/specification.json";
+});
+
+app.MapFallbackToFile("index.html");
+
+app.Map("/", () => Results.Redirect("/api"));
 
 app.MapEndpoints();
 
 app.Run();
+
+public partial class Program { }
