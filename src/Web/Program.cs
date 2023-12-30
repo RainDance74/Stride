@@ -19,6 +19,8 @@
 
         app.UseHttpsRedirection();
 
+        app.MapEndpoints();
+
         app.Run();
     }
 }
