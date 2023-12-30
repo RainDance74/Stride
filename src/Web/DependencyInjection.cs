@@ -11,6 +11,10 @@ public static class DependencyInjection
 
         services.AddHttpContextAccessor();
 
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
         return services;
     }
 }
