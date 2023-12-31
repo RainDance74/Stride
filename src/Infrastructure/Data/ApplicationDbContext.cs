@@ -13,7 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<TodoList> TodoLists => Set<TodoList>();
 
-    public DbSet<User> StrideUsers => Set<User>();
+    public DbSet<StrideUser> StrideUsers => Set<StrideUser>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
