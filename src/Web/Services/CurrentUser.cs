@@ -1,4 +1,6 @@
 ﻿using Stride.Application.Common.Interfaces;
+using Stride.Domain.Entities;
+using Stride.Infrastructure.Data;
 using System.Security.Claims;
 
 namespace Stride.Web.Services;

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Stride.Application.Common.Interfaces;
 using Stride.Infrastructure.Data;
+using Stride.Infrastructure.Data.Interceptors;
 using Stride.Infrastructure.Identity;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,10 @@ public static class DependencyInjection
 
         Guard.Against.Null(connectionString, message: $"Connection string was not found. " 
             + $"First, create a variable for \"{connectionStringEnvironmentKey}\" and put your connection string there.");
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, ManagableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
