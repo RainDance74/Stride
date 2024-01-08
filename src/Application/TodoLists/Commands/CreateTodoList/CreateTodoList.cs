@@ -15,8 +15,10 @@ public class CreateTodoListCommandHandler(IApplicationDbContext context, IUser u
 
     public async Task<int> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
     {
-        var user = _context.StrideUsers
-            .FirstOrDefault(u => u.Id == _user.Id);
+        Guard.Against.Null(_user.Id);
+
+        var user = await _context.StrideUsers
+            .FindAsync(new object[] { _user.Id }, cancellationToken);
 
         Guard.Against.Null(user);
 

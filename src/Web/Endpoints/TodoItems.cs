@@ -20,26 +20,57 @@ public class TodoItems : EndpointGroupBase
 
     public async Task<int> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
     {
-        return await sender.Send(command);
+        try
+        {
+            return await sender.Send(command);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return 0;
+        }
     }
 
     public async Task<IResult> UpdateTodoItem(ISender sender, int id, UpdateTodoItemCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
-        await sender.Send(command);
-        return Results.NoContent();
+        try
+        { 
+            if (id != command.Id) return Results.BadRequest();
+            await sender.Send(command);
+            return Results.NoContent();
+        }
+        catch(UnauthorizedAccessException)
+        {
+            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
+            return Results.NotFound();
+        }
     }
 
     public async Task<IResult> UpdateTodoItemDetail(ISender sender, int id, UpdateTodoItemDetailCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
-        await sender.Send(command);
-        return Results.NoContent();
+        try
+        {
+            if (id != command.Id) return Results.BadRequest();
+            await sender.Send(command);
+            return Results.NoContent();
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
+            return Results.NotFound();
+        }
     }
 
     public async Task<IResult> DeleteTodoItem(ISender sender, int id)
     {
-        await sender.Send(new DeleteTodoItemCommand(id));
-        return Results.NoContent();
+        try
+        {
+            await sender.Send(new DeleteTodoItemCommand(id));
+            return Results.NoContent();
+        }
+        catch(UnauthorizedAccessException)
+        {
+            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
+            return Results.NotFound();
+        }
     }
 }

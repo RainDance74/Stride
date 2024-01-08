@@ -11,9 +11,10 @@ public record CreateTodoItemCommand : IRequest<int>
     public string Title { get; init; } = null!;
 }
 
-public class CreateTodoItemCommandHandler(IApplicationDbContext context) : IRequestHandler<CreateTodoItemCommand, int>
+public class CreateTodoItemCommandHandler(IApplicationDbContext context, IUser user) : IRequestHandler<CreateTodoItemCommand, int>
 {
     private readonly IApplicationDbContext _context = context;
+    private readonly IUser _user = user;
 
     public async Task<int> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
     {
@@ -21,6 +22,18 @@ public class CreateTodoItemCommandHandler(IApplicationDbContext context) : IRequ
             .FirstOrDefaultAsync(l => l.Id == request.ListId, cancellationToken);
 
         Guard.Against.NotFound(request.ListId, targetList);
+
+        Guard.Against.Null(_user.Id);
+
+        var currentUser = await _context.StrideUsers
+            .FindAsync(new object[] { _user.Id }, cancellationToken);
+
+        Guard.Against.NotFound(_user.Id, currentUser);
+
+        if(targetList.Owner != currentUser)
+        {
+            throw new UnauthorizedAccessException("User should be owner of the target list.");
+        }
 
         var entity = new TodoItem
         {

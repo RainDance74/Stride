@@ -23,14 +23,30 @@ public class TodoLists : EndpointGroupBase
 
     public async Task<IResult> UpdateTodoList(ISender sender, int id, UpdateTodoListCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
-        await sender.Send(command);
-        return Results.NoContent();
+        try
+        {
+            if (id != command.Id) return Results.BadRequest();
+            await sender.Send(command);
+            return Results.NoContent();
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
+            return Results.NotFound();
+        }
     }
 
     public async Task<IResult> DeleteTodoList(ISender sender, int id)
     {
-        await sender.Send(new DeleteTodoListCommand(id));
-        return Results.NoContent();
+        try
+        {
+            await sender.Send(new DeleteTodoListCommand(id));
+            return Results.NoContent();
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
+            return Results.NotFound();
+        }
     }
 }
