@@ -1,7 +1,7 @@
 ﻿using Stride.Application.TodoLists.Commands.CreateTodoList;
 using Stride.Application.TodoLists.Commands.DeleteTodoList;
 using Stride.Application.TodoLists.Commands.UpdateTodoList;
-// using Stride.Application.TodoLists.Queries.GetTodos;
+using Stride.Application.TodoLists.Queries.GetTodoLists;
 
 namespace Stride.Web.Endpoints;
 
@@ -11,9 +11,15 @@ public class TodoLists : EndpointGroupBase
     {
         app.MapGroup(this)
             .RequireAuthorization()
+            .MapGet(GetTodoLists)
             .MapPost(CreateTodoList)
             .MapPut(UpdateTodoList, "{id}")
             .MapDelete(DeleteTodoList, "{id}");
+    }
+
+    public async Task<TodoListsVm> GetTodoLists(ISender sender)
+    {
+        return await sender.Send(new GetTodoListsQuery());
     }
 
     public async Task<int> CreateTodoList(ISender sender, CreateTodoListCommand command)

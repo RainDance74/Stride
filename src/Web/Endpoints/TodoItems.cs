@@ -3,6 +3,8 @@ using Stride.Application.TodoItems.Commands.CreateTodoItem;
 using Stride.Application.TodoItems.Commands.DeleteTodoItem;
 using Stride.Application.TodoItems.Commands.UpdateTodoItem;
 using Stride.Application.TodoItems.Commands.UpdateTodoItemDetail;
+using Stride.Application.TodoItems.Queries.GetTodoItems;
+using Stride.Domain.Entities;
 
 namespace Stride.Web.Endpoints;
 
@@ -12,10 +14,16 @@ public class TodoItems : EndpointGroupBase
     {
         app.MapGroup(this)
             .RequireAuthorization()
+            .MapGet(GetTodoItems, "{listId}")
             .MapPost(CreateTodoItem)
             .MapPut(UpdateTodoItem, "{id}")
             .MapPut(UpdateTodoItemDetail, "UpdateDetail/{id}")
             .MapDelete(DeleteTodoItem, "{id}");
+    }
+
+    public async Task<TodoItemsVm> GetTodoItems(ISender sender, int listId)
+    {
+        return await sender.Send(new GetTodoItemsQuery(listId));
     }
 
     public async Task<int> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
