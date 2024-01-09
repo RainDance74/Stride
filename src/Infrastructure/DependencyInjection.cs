@@ -13,8 +13,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        // TODO: Change method
-        var connectionStringEnvironmentKey = configuration.GetConnectionString("EnvironmentKey");
+        var connectionStringEnvironmentKey = configuration
+            .GetSection("EnvironmentKeys")
+            .GetValue<string>("ConnectionString");
 
         Guard.Against.Null(connectionStringEnvironmentKey, message: "A key for system variable of your connection string was not found in the appsettings.");
 
