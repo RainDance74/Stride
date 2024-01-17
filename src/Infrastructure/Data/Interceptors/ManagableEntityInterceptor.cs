@@ -37,18 +37,19 @@ public class ManagableEntityInterceptor(
 
         foreach(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseManageableEntity> entry in context.ChangeTracker.Entries<BaseManageableEntity>())
         {
-            Domain.Entities.StrideUser? user = _serviceProvider.GetRequiredService<ApplicationDbContext>().StrideUsers
+            // TODO: Am I need this?
+            Identity.ApplicationUser? user = _serviceProvider.GetRequiredService<ApplicationDbContext>().Users
                     .FirstOrDefault(u => u.Id == _user.Id);
 
             if(entry.State == EntityState.Added)
             {
                 Guard.Against.Null(user);
 
-                entry.Entity.CreatedBy = user;
+                entry.Entity.CreatedBy = user.Id;
             }
             else if(entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                entry.Entity.UpdatedBy = user;
+                entry.Entity.UpdatedBy = user?.Id;
             }
         }
     }

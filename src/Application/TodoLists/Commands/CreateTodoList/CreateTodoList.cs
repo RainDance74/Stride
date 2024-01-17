@@ -17,15 +17,10 @@ public class CreateTodoListCommandHandler(IApplicationDbContext context, IUser u
     {
         Guard.Against.Null(_user.Id);
 
-        StrideUser? user = await _context.StrideUsers
-            .FindAsync(new object[] { _user.Id }, cancellationToken);
-
-        Guard.Against.Null(user);
-
         var entity = new TodoList
         {
             Title = request.Title,
-            Owner = user
+            Owner = _user.Id
         };
 
         _context.TodoLists.Add(entity);
