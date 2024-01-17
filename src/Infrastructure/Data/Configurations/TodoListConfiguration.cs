@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Stride.Domain.Entities;
+using Stride.Infrastructure.Identity;
 
 namespace Stride.Infrastructure.Data.Configurations;
 
@@ -11,6 +12,12 @@ public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
     {
         builder.Property(i => i.Title)
             .HasMaxLength(50);
+
+        builder
+            .HasOne<ApplicationUser>()
+            .WithMany()
+            .HasForeignKey(e => e.Owner)
+            .IsRequired();
 
         builder.ConfigureManageable();
     }

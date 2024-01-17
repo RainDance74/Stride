@@ -25,12 +25,7 @@ public class CreateTodoItemCommandHandler(IApplicationDbContext context, IUser u
 
         Guard.Against.Null(_user.Id);
 
-        StrideUser? currentUser = await _context.StrideUsers
-            .FindAsync(new object[] { _user.Id }, cancellationToken);
-
-        Guard.Against.NotFound(_user.Id, currentUser);
-
-        if(targetList.Owner != currentUser)
+        if(targetList.Owner != _user.Id)
         {
             throw new UnauthorizedAccessException("User should be owner of the target list.");
         }

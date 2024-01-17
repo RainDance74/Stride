@@ -24,12 +24,7 @@ public class UpdateTodoItemDetailCommandHandler(IApplicationDbContext context, I
 
         Guard.Against.Null(_user.Id);
 
-        Domain.Entities.StrideUser? currentUser = await _context.StrideUsers
-            .FindAsync(new object[] { _user.Id }, cancellationToken);
-
-        Guard.Against.NotFound(_user.Id, currentUser);
-
-        if(entity.TodoList.Owner != currentUser)
+        if(entity.TodoList.Owner != _user.Id)
         {
             throw new UnauthorizedAccessException("User should be owner of the target list.");
         }

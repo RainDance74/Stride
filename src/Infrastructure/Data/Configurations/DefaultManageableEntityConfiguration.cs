@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Stride.Domain.Common;
+using Stride.Infrastructure.Identity;
 
 namespace Stride.Infrastructure.Data.Configurations;
 
@@ -10,14 +11,14 @@ public static class DefaultManageableEntityConfiguration
         where TEntity : BaseManageableEntity
     {
         builder
-            .HasOne(e => e.CreatedBy)
+            .HasOne<ApplicationUser>()
             .WithMany()
-            .HasForeignKey("CreatedByUserId")
+            .HasForeignKey(e => e.CreatedBy)
             .IsRequired();
 
         builder
-            .HasOne(e => e.UpdatedBy)
+            .HasOne<ApplicationUser>()
             .WithMany()
-            .HasForeignKey("UpdatedByUserId");
+            .HasForeignKey(e => e.UpdatedBy);
     }
 }

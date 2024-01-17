@@ -2,6 +2,6 @@
 
 public class BaseManageableEntity : BaseAuditableEntity<int>
 {
-    public StrideUser CreatedBy { get; set; } = null!;
-    public StrideUser? UpdatedBy { get; set; }
+    public string CreatedBy { get; set; } = null!;
+    public string? UpdatedBy { get; set; }
 }

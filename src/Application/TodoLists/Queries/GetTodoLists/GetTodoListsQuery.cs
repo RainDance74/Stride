@@ -17,7 +17,7 @@ public class GetTodoListsQueryHandler(IApplicationDbContext context, IMapper map
         {
             Lists = await _context.TodoLists
                 .AsNoTracking()
-                .Where(l => l.Owner.Id == _user.Id)
+                .Where(l => l.Owner == _user.Id)
                 .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
                 .OrderByDescending(l => l.Id)
                 .ToListAsync(cancellationToken)
