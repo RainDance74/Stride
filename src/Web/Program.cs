@@ -1,11 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Stride.Application;
+using Stride.Infrastructure;
+using Stride.Web;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebServices();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.UseHttpsRedirection();
 

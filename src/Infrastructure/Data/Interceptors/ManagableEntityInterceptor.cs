@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+
 using Stride.Application.Common.Interfaces;
 using Stride.Domain.Common;
 
 namespace Stride.Infrastructure.Data.Interceptors;
 
 public class ManagableEntityInterceptor(
-    IUser user, 
+    IUser user,
     IServiceProvider serviceProvider) : SaveChangesInterceptor
 {
     private readonly IUser _user = user;
@@ -29,11 +30,14 @@ public class ManagableEntityInterceptor(
 
     public void UpdateEntities(DbContext? context)
     {
-        if(context == null) return;
-
-        foreach(var entry in context.ChangeTracker.Entries<BaseManageableEntity>())
+        if(context == null)
         {
-            var user = _serviceProvider.GetRequiredService<ApplicationDbContext>().StrideUsers
+            return;
+        }
+
+        foreach(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseManageableEntity> entry in context.ChangeTracker.Entries<BaseManageableEntity>())
+        {
+            Domain.Entities.StrideUser? user = _serviceProvider.GetRequiredService<ApplicationDbContext>().StrideUsers
                     .FirstOrDefault(u => u.Id == _user.Id);
 
             if(entry.State == EntityState.Added)

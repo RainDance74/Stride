@@ -4,7 +4,7 @@ namespace Stride.Application.TodoLists.Queries.GetTodoLists;
 
 public record GetTodoListsQuery : IRequest<TodoListsVm>;
 
-public class GetTodoListsQueryHandler(IApplicationDbContext context, IMapper mapper, IUser user) 
+public class GetTodoListsQueryHandler(IApplicationDbContext context, IMapper mapper, IUser user)
     : IRequestHandler<GetTodoListsQuery, TodoListsVm>
 {
     private readonly IApplicationDbContext _context = context;

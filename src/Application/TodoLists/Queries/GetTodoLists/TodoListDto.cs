@@ -19,8 +19,9 @@ public class TodoListDto
         public Mapping()
         {
             CreateMap<TodoList, TodoListDto>()
-                .ForMember(d => d.Items, 
-                opt => opt.MapFrom(src => src.Items.OrderByDescending(i => i.Id)));;
+                .ForMember(d => d.Items,
+                opt => opt.MapFrom(src => src.Items.OrderByDescending(i => i.Id)));
+            ;
         }
     }
 }

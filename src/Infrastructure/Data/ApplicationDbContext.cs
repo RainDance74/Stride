@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Reflection;
+
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 using Stride.Application.Common.Interfaces;
 using Stride.Domain.Entities;
 using Stride.Infrastructure.Identity;
-using System.Reflection;
 
 namespace Stride.Infrastructure.Data;
 

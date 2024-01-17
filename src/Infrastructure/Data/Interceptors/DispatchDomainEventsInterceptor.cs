@@ -1,7 +1,9 @@
-﻿using Stride.Domain.Common;
-using MediatR;
+﻿using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+
+using Stride.Domain.Common;
 
 namespace Stride.Infrastructure.Data.Interceptors;
 
@@ -25,9 +27,12 @@ public class DispatchDomainEventsInterceptor(IMediator mediator) : SaveChangesIn
 
     public async Task DispatchDomainEvents(DbContext? context)
     {
-        if (context == null) return;
+        if(context == null)
+        {
+            return;
+        }
 
-        var entities = context.ChangeTracker
+        IEnumerable<BaseEntity<dynamic>> entities = context.ChangeTracker
             .Entries<BaseEntity<dynamic>>()
             .Where(e => e.Entity.DomainEvents.Count != 0)
             .Select(e => e.Entity);
@@ -38,7 +43,9 @@ public class DispatchDomainEventsInterceptor(IMediator mediator) : SaveChangesIn
 
         entities.ToList().ForEach(e => e.ClearDomainEvents());
 
-        foreach (var domainEvent in domainEvents)
+        foreach(BaseEvent? domainEvent in domainEvents)
+        {
             await _mediator.Publish(domainEvent);
+        }
     }
 }

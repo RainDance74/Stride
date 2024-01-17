@@ -1,10 +1,8 @@
-﻿using Stride.Application.Common.Models;
-using Stride.Application.TodoItems.Commands.CreateTodoItem;
+﻿using Stride.Application.TodoItems.Commands.CreateTodoItem;
 using Stride.Application.TodoItems.Commands.DeleteTodoItem;
 using Stride.Application.TodoItems.Commands.UpdateTodoItem;
 using Stride.Application.TodoItems.Commands.UpdateTodoItemDetail;
 using Stride.Application.TodoItems.Queries.GetTodoItems;
-using Stride.Domain.Entities;
 
 namespace Stride.Web.Endpoints;
 
@@ -21,10 +19,7 @@ public class TodoItems : EndpointGroupBase
             .MapDelete(DeleteTodoItem, "{id}");
     }
 
-    public async Task<TodoItemsVm> GetTodoItems(ISender sender, int listId)
-    {
-        return await sender.Send(new GetTodoItemsQuery(listId));
-    }
+    public async Task<TodoItemsVm> GetTodoItems(ISender sender, int listId) => await sender.Send(new GetTodoItemsQuery(listId));
 
     public async Task<int> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
     {
@@ -32,7 +27,7 @@ public class TodoItems : EndpointGroupBase
         {
             return await sender.Send(command);
         }
-        catch (UnauthorizedAccessException)
+        catch(UnauthorizedAccessException)
         {
             return 0;
         }
@@ -41,8 +36,12 @@ public class TodoItems : EndpointGroupBase
     public async Task<IResult> UpdateTodoItem(ISender sender, int id, UpdateTodoItemCommand command)
     {
         try
-        { 
-            if (id != command.Id) return Results.BadRequest();
+        {
+            if(id != command.Id)
+            {
+                return Results.BadRequest();
+            }
+
             await sender.Send(command);
             return Results.NoContent();
         }
@@ -57,11 +56,15 @@ public class TodoItems : EndpointGroupBase
     {
         try
         {
-            if (id != command.Id) return Results.BadRequest();
+            if(id != command.Id)
+            {
+                return Results.BadRequest();
+            }
+
             await sender.Send(command);
             return Results.NoContent();
         }
-        catch (UnauthorizedAccessException)
+        catch(UnauthorizedAccessException)
         {
             // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
             return Results.NotFound();

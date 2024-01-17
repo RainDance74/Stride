@@ -19,7 +19,7 @@ public class TodoItemDto
         public Mapping()
         {
             CreateMap<TodoItem, TodoItemDto>()
-                .ForMember(i => i.ListId, 
+                .ForMember(i => i.ListId,
                 opt => opt.MapFrom(s => s.TodoList.Id));
         }
     }

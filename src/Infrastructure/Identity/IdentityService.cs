@@ -1,8 +1,9 @@
-﻿using Stride.Application.Common.Interfaces;
-using Stride.Application.Common.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
+using Stride.Application.Common.Interfaces;
+using Stride.Application.Common.Models;
 
 namespace Stride.Infrastructure.Identity;
 
@@ -17,7 +18,7 @@ public class IdentityService(
 
     public async Task<string?> GetUserNameAsync(string userId)
     {
-        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+        ApplicationUser user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
         return user.UserName;
     }
@@ -30,37 +31,37 @@ public class IdentityService(
             Email = userName,
         };
 
-        var result = await _userManager.CreateAsync(user, password);
+        IdentityResult result = await _userManager.CreateAsync(user, password);
 
         return (result.ToApplicationResult(), user.Id);
     }
 
     public async Task<bool> AuthorizeAsync(string userId, string policyName)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        ApplicationUser? user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
         if(user == null)
         {
             return false;
         }
 
-        var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
+        System.Security.Claims.ClaimsPrincipal principal = await _userClaimsPrincipalFactory.CreateAsync(user);
 
-        var result = await _authorizationService.AuthorizeAsync(principal, policyName);
+        AuthorizationResult result = await _authorizationService.AuthorizeAsync(principal, policyName);
 
         return result.Succeeded;
     }
 
     public async Task<Result> DeleteUserAsync(string userId)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        ApplicationUser? user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
         return user != null ? await DeleteUserAsync(user) : Result.Success();
     }
 
     public async Task<Result> DeleteUserAsync(ApplicationUser user)
     {
-        var result = await _userManager.DeleteAsync(user);
+        IdentityResult result = await _userManager.DeleteAsync(user);
 
         return result.ToApplicationResult();
     }

@@ -1,10 +1,12 @@
-﻿using NSwag.Generation.Processors.Security;
-using NSwag;
+﻿using NSwag;
+using NSwag.Generation.Processors.Security;
+
 using Stride.Application.Common.Interfaces;
 using Stride.Web.Services;
+
 using ZymLabs.NSwag.FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Stride.Web;
 
 public static class DependencyInjection
 {
@@ -16,8 +18,8 @@ public static class DependencyInjection
 
         services.AddScoped(provider =>
         {
-            var validationRules = provider.GetService<IEnumerable<FluentValidationRule>>();
-            var loggerFactory = provider.GetService<ILoggerFactory>();
+            IEnumerable<FluentValidationRule>? validationRules = provider.GetService<IEnumerable<FluentValidationRule>>();
+            ILoggerFactory? loggerFactory = provider.GetService<ILoggerFactory>();
 
             return new FluentValidationSchemaProcessor(provider, validationRules, loggerFactory);
         });
@@ -30,7 +32,7 @@ public static class DependencyInjection
 
 
             // Add the fluent validations schema processor
-            var fluentValidationSchemaProcessor =
+            FluentValidationSchemaProcessor fluentValidationSchemaProcessor =
                 sp.CreateScope().ServiceProvider.GetRequiredService<FluentValidationSchemaProcessor>();
 
             configure.SchemaSettings.SchemaProcessors.Add(fluentValidationSchemaProcessor);

@@ -1,7 +1,8 @@
-﻿using Stride.Domain.Common;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+
+using Stride.Domain.Common;
 
 namespace Stride.Infrastructure.Data.Interceptors;
 
@@ -26,9 +27,12 @@ public class AuditableEntityInterceptor(
 
     public void UpdateEntities(DbContext? context)
     {
-        if(context == null) return;
+        if(context == null)
+        {
+            return;
+        }
 
-        foreach(var entry in context.ChangeTracker.Entries<BaseAuditableEntity<int>>())
+        foreach(EntityEntry<BaseAuditableEntity<int>> entry in context.ChangeTracker.Entries<BaseAuditableEntity<int>>())
         {
             if(entry.State == EntityState.Added)
             {
@@ -45,8 +49,8 @@ public class AuditableEntityInterceptor(
 public static class Extensions
 {
     public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
-        entry.References.Any(r => 
-            r.TargetEntry != null && 
-            r.TargetEntry.Metadata.IsOwned() && 
+        entry.References.Any(r =>
+            r.TargetEntry != null &&
+            r.TargetEntry.Metadata.IsOwned() &&
             (r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
 }

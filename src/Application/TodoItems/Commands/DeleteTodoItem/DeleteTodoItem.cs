@@ -12,7 +12,7 @@ public class DeleteTodoItemCommandHandler(IApplicationDbContext context, IUser u
 
     public async Task Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.TodoItems
+        Domain.Entities.TodoItem? entity = await _context.TodoItems
             .Include(i => i.TodoList)
             .FirstOrDefaultAsync(i => i.Id == request.Id, cancellationToken);
 
@@ -20,7 +20,7 @@ public class DeleteTodoItemCommandHandler(IApplicationDbContext context, IUser u
 
         Guard.Against.Null(_user.Id);
 
-        var currentUser = await _context.StrideUsers
+        Domain.Entities.StrideUser? currentUser = await _context.StrideUsers
             .FindAsync(new object[] { _user.Id }, cancellationToken);
 
         Guard.Against.NotFound(_user.Id, currentUser);

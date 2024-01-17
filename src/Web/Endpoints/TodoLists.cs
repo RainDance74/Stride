@@ -17,25 +17,23 @@ public class TodoLists : EndpointGroupBase
             .MapDelete(DeleteTodoList, "{id}");
     }
 
-    public async Task<TodoListsVm> GetTodoLists(ISender sender)
-    {
-        return await sender.Send(new GetTodoListsQuery());
-    }
+    public async Task<TodoListsVm> GetTodoLists(ISender sender) => await sender.Send(new GetTodoListsQuery());
 
-    public async Task<int> CreateTodoList(ISender sender, CreateTodoListCommand command)
-    {
-        return await sender.Send(command);
-    }
+    public async Task<int> CreateTodoList(ISender sender, CreateTodoListCommand command) => await sender.Send(command);
 
     public async Task<IResult> UpdateTodoList(ISender sender, int id, UpdateTodoListCommand command)
     {
         try
         {
-            if (id != command.Id) return Results.BadRequest();
+            if(id != command.Id)
+            {
+                return Results.BadRequest();
+            }
+
             await sender.Send(command);
             return Results.NoContent();
         }
-        catch (UnauthorizedAccessException)
+        catch(UnauthorizedAccessException)
         {
             // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
             return Results.NotFound();
@@ -49,7 +47,7 @@ public class TodoLists : EndpointGroupBase
             await sender.Send(new DeleteTodoListCommand(id));
             return Results.NoContent();
         }
-        catch (UnauthorizedAccessException)
+        catch(UnauthorizedAccessException)
         {
             // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
             return Results.NotFound();

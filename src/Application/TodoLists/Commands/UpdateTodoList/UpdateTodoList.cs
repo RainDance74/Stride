@@ -16,19 +16,19 @@ public class UpdateTodoListCommandHandler(IApplicationDbContext context, IUser u
 
     public async Task Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.TodoLists
+        Domain.Entities.TodoList? entity = await _context.TodoLists
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);
 
         Guard.Against.Null(_user.Id);
 
-        var currentUser = await _context.StrideUsers
+        Domain.Entities.StrideUser? currentUser = await _context.StrideUsers
             .FindAsync(new object[] { _user.Id }, cancellationToken);
 
         Guard.Against.NotFound(_user.Id, currentUser);
 
-        if (entity.Owner != currentUser)
+        if(entity.Owner != currentUser)
         {
             throw new UnauthorizedAccessException("User should be owner of the list.");
         }

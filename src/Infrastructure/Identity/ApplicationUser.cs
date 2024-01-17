@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+
 using Stride.Domain.Entities;
 
 namespace Stride.Infrastructure.Identity;

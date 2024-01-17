@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using Stride.Domain.Entities;
 
 namespace Stride.Infrastructure.Data.Configurations;

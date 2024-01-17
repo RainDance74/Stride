@@ -18,14 +18,14 @@ public class CreateTodoItemCommandHandler(IApplicationDbContext context, IUser u
 
     public async Task<int> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
     {
-        var targetList = await _context.TodoLists
+        TodoList? targetList = await _context.TodoLists
             .FirstOrDefaultAsync(l => l.Id == request.ListId, cancellationToken);
 
         Guard.Against.NotFound(request.ListId, targetList);
 
         Guard.Against.Null(_user.Id);
 
-        var currentUser = await _context.StrideUsers
+        StrideUser? currentUser = await _context.StrideUsers
             .FindAsync(new object[] { _user.Id }, cancellationToken);
 
         Guard.Against.NotFound(_user.Id, currentUser);

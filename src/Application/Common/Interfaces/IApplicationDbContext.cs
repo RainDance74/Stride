@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Stride.Domain.Entities;
+﻿using Stride.Domain.Entities;
 
 namespace Stride.Application.Common.Interfaces;
 

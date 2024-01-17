@@ -1,5 +1,6 @@
-﻿using Stride.Domain.Events;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+
+using Stride.Domain.Events;
 
 namespace Stride.Application.TodoItems.EventHandlers;
 

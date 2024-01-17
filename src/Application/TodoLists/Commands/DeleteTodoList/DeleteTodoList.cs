@@ -11,7 +11,7 @@ public class DeleteTodoListCommandHandler(IApplicationDbContext context, IUser u
 
     public async Task Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.TodoLists
+        Domain.Entities.TodoList? entity = await _context.TodoLists
             .Where(l => l.Id == request.Id)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -19,7 +19,7 @@ public class DeleteTodoListCommandHandler(IApplicationDbContext context, IUser u
 
         Guard.Against.Null(_user.Id);
 
-        var currentUser = await _context.StrideUsers
+        Domain.Entities.StrideUser? currentUser = await _context.StrideUsers
             .FindAsync(new object[] { _user.Id }, cancellationToken);
 
         Guard.Against.NotFound(_user.Id, currentUser);
