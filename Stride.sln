@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "src\Web\Web.csproj",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C80C3BAB-FDCE-4B13-8462-5D24D2CA874A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "tests\Application.UnitTests\Application.UnitTests.csproj", "{677669B9-28DF-4574-9B03-AE74E7D9D825}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "tests\Application.UnitTests\Application.UnitTests.csproj", "{677669B9-28DF-4574-9B03-AE74E7D9D825}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.FunctionalTests", "tests\Application.FunctionalTests\Application.FunctionalTests.csproj", "{715BD031-D9C5-4FC3-B7DB-64493B741DCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{677669B9-28DF-4574-9B03-AE74E7D9D825}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{677669B9-28DF-4574-9B03-AE74E7D9D825}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{677669B9-28DF-4574-9B03-AE74E7D9D825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{715BD031-D9C5-4FC3-B7DB-64493B741DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{715BD031-D9C5-4FC3-B7DB-64493B741DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{715BD031-D9C5-4FC3-B7DB-64493B741DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{715BD031-D9C5-4FC3-B7DB-64493B741DCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{3F7EFDAA-EC77-4B40-A7D8-A82747813D96} = {152405C5-7115-4E0B-8210-0B8C9E7B8DBF}
 		{BF2F7A8D-E6F2-420D-893B-61941AC81240} = {152405C5-7115-4E0B-8210-0B8C9E7B8DBF}
 		{677669B9-28DF-4574-9B03-AE74E7D9D825} = {C80C3BAB-FDCE-4B13-8462-5D24D2CA874A}
+		{715BD031-D9C5-4FC3-B7DB-64493B741DCD} = {C80C3BAB-FDCE-4B13-8462-5D24D2CA874A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {884C9484-C117-4CB9-9D83-CE7ABA7F5FCA}
