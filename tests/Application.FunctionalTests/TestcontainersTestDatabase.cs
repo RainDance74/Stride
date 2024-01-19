@@ -49,7 +49,8 @@ public class TestcontainersTestDatabase : ITestDatabase
         {
             DbAdapter = DbAdapter.Postgres,
             SchemasToInclude = ["public"],
-            TablesToIgnore = ["__EFMigrationsHistory"]
+            TablesToIgnore = ["__EFMigrationsHistory"],
+            WithReseed = true
         });
 
         await _connection.CloseAsync();
