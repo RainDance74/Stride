@@ -7,8 +7,12 @@ namespace Stride.Web.Endpoints;
 
 public class TodoLists : EndpointGroupBase
 {
+    private bool _isDevelopment;
+
     public override void Map(WebApplication app)
     {
+        _isDevelopment = app.Environment.IsDevelopment();
+
         app.MapGroup(this)
             .RequireAuthorization()
             .MapGet(GetTodoLists)
@@ -35,8 +39,9 @@ public class TodoLists : EndpointGroupBase
         }
         catch(UnauthorizedAccessException)
         {
-            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
-            return Results.NotFound();
+            return _isDevelopment
+                ? Results.Forbid()
+                : Results.NotFound();
         }
     }
 
@@ -49,8 +54,9 @@ public class TodoLists : EndpointGroupBase
         }
         catch(UnauthorizedAccessException)
         {
-            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
-            return Results.NotFound();
+            return _isDevelopment
+                ? Results.Forbid()
+                : Results.NotFound();
         }
     }
 }

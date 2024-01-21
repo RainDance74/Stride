@@ -8,8 +8,12 @@ namespace Stride.Web.Endpoints;
 
 public class TodoItems : EndpointGroupBase
 {
+    private bool _isDevelopment;
+
     public override void Map(WebApplication app)
     {
+        _isDevelopment = app.Environment.IsDevelopment();
+
         app.MapGroup(this)
             .RequireAuthorization()
             .MapGet(GetTodoItems, "{listId}")
@@ -27,10 +31,12 @@ public class TodoItems : EndpointGroupBase
         {
             return Results.Ok(await sender.Send(command));
         }
+
         catch(UnauthorizedAccessException)
         {
-            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
-            return Results.NotFound();
+            return _isDevelopment
+                ? Results.Forbid()
+                : Results.NotFound();
         }
     }
 
@@ -48,8 +54,9 @@ public class TodoItems : EndpointGroupBase
         }
         catch(UnauthorizedAccessException)
         {
-            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
-            return Results.NotFound();
+            return _isDevelopment
+                ? Results.Forbid()
+                : Results.NotFound();
         }
     }
 
@@ -67,8 +74,9 @@ public class TodoItems : EndpointGroupBase
         }
         catch(UnauthorizedAccessException)
         {
-            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
-            return Results.NotFound();
+            return _isDevelopment
+                ? Results.Forbid()
+                : Results.NotFound();
         }
     }
 
@@ -81,8 +89,9 @@ public class TodoItems : EndpointGroupBase
         }
         catch(UnauthorizedAccessException)
         {
-            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
-            return Results.NotFound();
+            return _isDevelopment
+                ? Results.Forbid()
+                : Results.NotFound();
         }
     }
 }
