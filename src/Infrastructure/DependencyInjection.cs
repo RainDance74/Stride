@@ -41,8 +41,20 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
-        services.AddAuthentication()
-            .AddBearerToken(IdentityConstants.BearerScheme);
+        services.AddAuthentication(opt =>
+        {
+            opt.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
+            opt.DefaultChallengeScheme = IdentityConstants.BearerScheme;
+            opt.DefaultScheme = IdentityConstants.BearerScheme;
+        })
+            .AddBearerToken(IdentityConstants.BearerScheme)
+            .AddCookie("Identity.Application", opt =>
+            {
+                opt.ExpireTimeSpan = TimeSpan.FromDays(7);
+                opt.SlidingExpiration = true;
+                opt.Cookie.HttpOnly = true;
+                opt.LoginPath = "/login";
+            });
 
         services.AddAuthorizationBuilder();
 
