@@ -1,4 +1,5 @@
-﻿using Stride.Application.TodoItems.Commands.CreateTodoItem;
+﻿using Stride.Application.Common.Exceptions;
+using Stride.Application.TodoItems.Commands.CreateTodoItem;
 using Stride.Application.TodoLists.Commands.CreateTodoList;
 using Stride.Domain.Entities;
 
@@ -8,6 +9,27 @@ namespace Stride.Application.FunctionalTests.TodoItems.Commands;
 
 public class CreateTodoItemTests : BaseTestFixture
 {
+    [Test]
+    public async Task ShouldRequireMinimumFields()
+    {
+        var command = new CreateTodoItemCommand();
+
+        await FluentActions.Invoking(() =>
+            SendAsync(command)).Should().ThrowAsync<ValidationException>();
+    }
+
+    [Test]
+    public async Task ShouldRequireTitleWithMaxLenghtOf50Characters()
+    {
+        var command = new CreateTodoItemCommand
+        {
+            Title = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        };
+
+        await FluentActions.Invoking(() =>
+            SendAsync(command)).Should().ThrowAsync<ValidationException>();
+    }
+
     [Test]
     public async Task ShouldCreateTodoItem()
     {

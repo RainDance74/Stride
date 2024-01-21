@@ -1,4 +1,6 @@
-﻿using Stride.Application.TodoLists.Commands.CreateTodoList;
+﻿using Stride.Application.Common.Exceptions;
+
+using Stride.Application.TodoLists.Commands.CreateTodoList;
 using Stride.Domain.Entities;
 
 using static Stride.Application.FunctionalTests.Testing;
@@ -7,6 +9,44 @@ namespace Stride.Application.FunctionalTests.TodoLists.Commands;
 
 public class CreateTodoListTests : BaseTestFixture
 {
+    [Test]
+    public async Task ShouldRequireMinimumFields()
+    {
+        var command = new CreateTodoListCommand();
+        await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<ValidationException>();
+    }
+
+    [Test]
+    public async Task ShouldRequireTitleWithMaxLenghtOf50Characters()
+    {
+        var command = new CreateTodoListCommand
+        {
+            Title = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        };
+
+        await FluentActions.Invoking(() =>
+            SendAsync(command)).Should().ThrowAsync<ValidationException>();
+    }
+
+    [Test]
+    public async Task ShouldRequireUniqueTitle()
+    {
+        await RunAsDefaultUserAsync();
+
+        await SendAsync(new CreateTodoListCommand
+        {
+            Title = "Shopping"
+        });
+
+        var command = new CreateTodoListCommand
+        {
+            Title = "Shopping"
+        };
+
+        await FluentActions.Invoking(() =>
+            SendAsync(command)).Should().ThrowAsync<ValidationException>();
+    }
+
     [Test]
     public async Task ShouldCreateTodoList()
     {
