@@ -10,7 +10,8 @@ public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
     public void Configure(EntityTypeBuilder<TodoItem> builder)
     {
         builder.Property(i => i.Title)
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .IsRequired();
 
         builder.ConfigureManageable();
     }

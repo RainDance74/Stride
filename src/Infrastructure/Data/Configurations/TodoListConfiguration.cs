@@ -11,7 +11,8 @@ public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
     public void Configure(EntityTypeBuilder<TodoList> builder)
     {
         builder.Property(i => i.Title)
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .IsRequired();
 
         builder
             .HasOne<ApplicationUser>()
