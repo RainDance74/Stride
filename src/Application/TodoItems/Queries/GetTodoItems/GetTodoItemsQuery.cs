@@ -1,7 +1,7 @@
 ﻿using Stride.Application.Common.Interfaces;
 
 namespace Stride.Application.TodoItems.Queries.GetTodoItems;
-public record GetTodoItemsQuery(int Id) : IRequest<TodoItemsVm>;
+public record GetTodoItemsQuery(int ListId) : IRequest<TodoItemsVm>;
 
 public class GetTodoItemsQueryHandler(IApplicationDbContext context, IMapper mapper, IUser user)
     : IRequestHandler<GetTodoItemsQuery, TodoItemsVm>
@@ -17,7 +17,7 @@ public class GetTodoItemsQueryHandler(IApplicationDbContext context, IMapper map
             Items = await _context.TodoItems
                 .AsNoTracking()
                 .Where(i => i.TodoList.Owner == _user.Id)
-                .Where(i => i.TodoList.Id == request.Id)
+                .Where(i => i.TodoList.Id == request.ListId)
                 .ProjectTo<TodoItemDto>(_mapper.ConfigurationProvider)
                 .OrderByDescending(l => l.Id)
                 .ToListAsync(cancellationToken)
