@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
 
-using FluentValidation;
-
 using Microsoft.Extensions.DependencyInjection;
 
 using Stride.Application.Common.Behaviors;
@@ -20,6 +18,7 @@ public static class DependencyInjection
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+            cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
         });
 
