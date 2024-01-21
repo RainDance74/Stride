@@ -21,15 +21,16 @@ public class TodoItems : EndpointGroupBase
 
     public async Task<TodoItemsVm> GetTodoItems(ISender sender, int listId) => await sender.Send(new GetTodoItemsQuery(listId));
 
-    public async Task<int> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
+    public async Task<IResult> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
     {
         try
         {
-            return await sender.Send(command);
+            return Results.Ok(await sender.Send(command));
         }
         catch(UnauthorizedAccessException)
         {
-            return 0;
+            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
+            return Results.NotFound();
         }
     }
 
