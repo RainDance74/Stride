@@ -19,18 +19,7 @@ public class TodoLists : EndpointGroupBase
 
     public async Task<TodoListsVm> GetTodoLists(ISender sender) => await sender.Send(new GetTodoListsQuery());
 
-    public async Task<IResult> CreateTodoList(ISender sender, CreateTodoListCommand command)
-    {
-        try
-        {
-            return Results.Ok(await sender.Send(command));
-        }
-        catch(UnauthorizedAccessException)
-        {
-            // TODO: Ideally should return forbiden access in a case if envrimoment is set to debug
-            return Results.NotFound();
-        }
-    }
+    public async Task<IResult> CreateTodoList(ISender sender, CreateTodoListCommand command) => Results.Ok(await sender.Send(command));
 
     public async Task<IResult> UpdateTodoList(ISender sender, int id, UpdateTodoListCommand command)
     {
