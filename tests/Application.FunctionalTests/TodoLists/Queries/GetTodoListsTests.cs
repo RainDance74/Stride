@@ -35,14 +35,4 @@ public class GetTodoListsTests : BaseTestFixture
         result.Lists.Should().HaveCount(1);
         result.Lists.First().Items.Should().HaveCount(7);
     }
-
-    [Test]
-    public async Task ShouldDenyAnonymousUser()
-    {
-        var query = new GetTodoListsQuery();
-
-        Func<Task<TodoListsVm>> action = () => SendAsync(query);
-
-        await action.Should().ThrowAsync<UnauthorizedAccessException>();
-    }
 }

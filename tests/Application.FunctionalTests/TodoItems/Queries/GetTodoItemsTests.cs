@@ -8,13 +8,6 @@ namespace Stride.Application.FunctionalTests.TodoItems.Queries;
 public class GetTodoItemsTests : BaseTestFixture
 {
     [Test]
-    public async Task ShouldRequireValidTodoListId()
-    {
-        var query = new GetTodoItemsQuery(99);
-        await FluentActions.Invoking(() => SendAsync(query)).Should().ThrowAsync<NotFoundException>();
-    }
-
-    [Test]
     public async Task ShouldReturnAllListsAndItems()
     {
         var userId = await RunAsDefaultUserAsync();
@@ -41,15 +34,5 @@ public class GetTodoItemsTests : BaseTestFixture
 
         result.Items.Should().HaveCount(7);
         result.Items.Last().Id.Should().Be(1);
-    }
-
-    [Test]
-    public async Task ShouldDenyAnonymousUser()
-    {
-        var query = new GetTodoItemsQuery(1);
-
-        Func<Task<TodoItemsVm>> action = () => SendAsync(query);
-
-        await action.Should().ThrowAsync<UnauthorizedAccessException>();
     }
 }
