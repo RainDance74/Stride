@@ -1,5 +1,4 @@
-﻿using Stride.Application.Common.Exceptions;
-using Stride.Application.TodoLists.Commands.CreateTodoList;
+﻿using Stride.Application.TodoLists.Commands.CreateTodoList;
 using Stride.Application.TodoLists.Commands.DeleteTodoList;
 using Stride.Application.TodoLists.Commands.UpdateTodoList;
 using Stride.Application.TodoLists.Queries.GetTodoLists;
@@ -8,12 +7,8 @@ namespace Stride.Web.Endpoints;
 
 public class TodoLists : EndpointGroupBase
 {
-    private bool _isDevelopment;
-
     public override void Map(WebApplication app)
     {
-        _isDevelopment = app.Environment.IsDevelopment();
-
         app.MapGroup(this)
             .RequireAuthorization()
             .MapGet(GetTodoLists)
@@ -28,36 +23,18 @@ public class TodoLists : EndpointGroupBase
 
     public async Task<IResult> UpdateTodoList(ISender sender, int id, UpdateTodoListCommand command)
     {
-        try
+        if(id != command.Id)
         {
-            if(id != command.Id)
-            {
-                return Results.BadRequest();
-            }
+            return Results.BadRequest();
+        }
 
-            await sender.Send(command);
-            return Results.NoContent();
-        }
-        catch(ForbiddenAccessException)
-        {
-            return _isDevelopment
-                ? Results.Forbid()
-                : Results.NotFound();
-        }
+        await sender.Send(command);
+        return Results.NoContent();
     }
 
     public async Task<IResult> DeleteTodoList(ISender sender, int id)
     {
-        try
-        {
-            await sender.Send(new DeleteTodoListCommand(id));
-            return Results.NoContent();
-        }
-        catch(ForbiddenAccessException)
-        {
-            return _isDevelopment
-                ? Results.Forbid()
-                : Results.NotFound();
-        }
+        await sender.Send(new DeleteTodoListCommand(id));
+        return Results.NoContent();
     }
 }

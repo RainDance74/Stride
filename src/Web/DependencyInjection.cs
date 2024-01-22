@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
+        services.AddExceptionHandler<CustomExceptionHandler>();
+
         services.AddScoped(provider =>
         {
             IEnumerable<FluentValidationRule>? validationRules = provider.GetService<IEnumerable<FluentValidationRule>>();

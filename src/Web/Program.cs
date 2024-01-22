@@ -35,6 +35,8 @@ app.UseSwaggerUi(settings =>
 
 app.MapFallbackToFile("index.html");
 
+app.UseExceptionHandler(opt => { });
+
 app.Map("/", () => Results.Redirect("/api"));
 
 app.MapEndpoints();
