@@ -41,6 +41,8 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
+        services.AddScoped<ApplicationDbContextInitialiser>();
+
         services.AddAuthentication(opt =>
         {
             opt.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
