@@ -1,4 +1,5 @@
-﻿using Stride.Application.Common.Interfaces;
+﻿using Stride.Application.Common.Exceptions;
+using Stride.Application.Common.Interfaces;
 using Stride.Domain.Entities;
 using Stride.Domain.Events;
 
@@ -27,7 +28,7 @@ public class CreateTodoItemCommandHandler(IApplicationDbContext context, IUser u
 
         if(targetList.Owner != _user.Id)
         {
-            throw new UnauthorizedAccessException("User should be owner of the target list.");
+            throw new ForbiddenAccessException("User should be owner of the target list.");
         }
 
         var entity = new TodoItem

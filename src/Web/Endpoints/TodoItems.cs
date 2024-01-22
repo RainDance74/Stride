@@ -1,4 +1,5 @@
-﻿using Stride.Application.TodoItems.Commands.CreateTodoItem;
+﻿using Stride.Application.Common.Exceptions;
+using Stride.Application.TodoItems.Commands.CreateTodoItem;
 using Stride.Application.TodoItems.Commands.DeleteTodoItem;
 using Stride.Application.TodoItems.Commands.UpdateTodoItem;
 using Stride.Application.TodoItems.Commands.UpdateTodoItemDetail;
@@ -32,7 +33,7 @@ public class TodoItems : EndpointGroupBase
             return Results.Ok(await sender.Send(command));
         }
 
-        catch(UnauthorizedAccessException)
+        catch(ForbiddenAccessException)
         {
             return _isDevelopment
                 ? Results.Forbid()
@@ -52,7 +53,7 @@ public class TodoItems : EndpointGroupBase
             await sender.Send(command);
             return Results.NoContent();
         }
-        catch(UnauthorizedAccessException)
+        catch(ForbiddenAccessException)
         {
             return _isDevelopment
                 ? Results.Forbid()
@@ -72,7 +73,7 @@ public class TodoItems : EndpointGroupBase
             await sender.Send(command);
             return Results.NoContent();
         }
-        catch(UnauthorizedAccessException)
+        catch(ForbiddenAccessException)
         {
             return _isDevelopment
                 ? Results.Forbid()
@@ -87,7 +88,7 @@ public class TodoItems : EndpointGroupBase
             await sender.Send(new DeleteTodoItemCommand(id));
             return Results.NoContent();
         }
-        catch(UnauthorizedAccessException)
+        catch(ForbiddenAccessException)
         {
             return _isDevelopment
                 ? Results.Forbid()

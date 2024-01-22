@@ -1,4 +1,5 @@
-﻿using Stride.Application.TodoLists.Commands.CreateTodoList;
+﻿using Stride.Application.Common.Exceptions;
+using Stride.Application.TodoLists.Commands.CreateTodoList;
 using Stride.Application.TodoLists.Commands.DeleteTodoList;
 using Stride.Application.TodoLists.Commands.UpdateTodoList;
 using Stride.Application.TodoLists.Queries.GetTodoLists;
@@ -37,7 +38,7 @@ public class TodoLists : EndpointGroupBase
             await sender.Send(command);
             return Results.NoContent();
         }
-        catch(UnauthorizedAccessException)
+        catch(ForbiddenAccessException)
         {
             return _isDevelopment
                 ? Results.Forbid()
@@ -52,7 +53,7 @@ public class TodoLists : EndpointGroupBase
             await sender.Send(new DeleteTodoListCommand(id));
             return Results.NoContent();
         }
-        catch(UnauthorizedAccessException)
+        catch(ForbiddenAccessException)
         {
             return _isDevelopment
                 ? Results.Forbid()

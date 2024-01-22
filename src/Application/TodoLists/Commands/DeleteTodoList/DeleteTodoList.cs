@@ -1,4 +1,5 @@
-﻿using Stride.Application.Common.Interfaces;
+﻿using Stride.Application.Common.Exceptions;
+using Stride.Application.Common.Interfaces;
 
 namespace Stride.Application.TodoLists.Commands.DeleteTodoList;
 
@@ -21,7 +22,7 @@ public class DeleteTodoListCommandHandler(IApplicationDbContext context, IUser u
 
         if(entity.Owner != _user.Id)
         {
-            throw new UnauthorizedAccessException("User should be owner of the list.");
+            throw new ForbiddenAccessException("User should be owner of the list.");
         }
 
         _context.TodoLists.Remove(entity);

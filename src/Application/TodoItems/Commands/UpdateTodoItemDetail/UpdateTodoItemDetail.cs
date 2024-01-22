@@ -1,4 +1,5 @@
-﻿using Stride.Application.Common.Interfaces;
+﻿using Stride.Application.Common.Exceptions;
+using Stride.Application.Common.Interfaces;
 
 namespace Stride.Application.TodoItems.Commands.UpdateTodoItemDetail;
 
@@ -26,7 +27,7 @@ public class UpdateTodoItemDetailCommandHandler(IApplicationDbContext context, I
 
         if(entity.TodoList.Owner != _user.Id)
         {
-            throw new UnauthorizedAccessException("User should be owner of the target list.");
+            throw new ForbiddenAccessException("User should be owner of the target list.");
         }
 
         entity.Description = request.Description;
