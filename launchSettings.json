@@ -5,8 +5,7 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "web": "StartDebugging",
-        "db": "StartWithoutDebugging",
-        "pgadmin": "StartWithoutDebugging"
+        "db": "StartWithoutDebugging"
       }
     }
   }
