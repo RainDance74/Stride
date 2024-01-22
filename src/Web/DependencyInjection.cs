@@ -2,6 +2,7 @@
 using NSwag.Generation.Processors.Security;
 
 using Stride.Application.Common.Interfaces;
+using Stride.Infrastructure.Data;
 using Stride.Web.Services;
 
 using ZymLabs.NSwag.FluentValidation;
@@ -15,6 +16,9 @@ public static class DependencyInjection
         services.AddScoped<IUser, CurrentUser>();
 
         services.AddHttpContextAccessor();
+
+        services.AddHealthChecks()
+            .AddDbContextCheck<ApplicationDbContext>();
 
         services.AddScoped(provider =>
         {

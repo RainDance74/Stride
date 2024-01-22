@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.OpenApi" />
     <PackageReference Include="NSwag.AspNetCore" />
     <PackageReference Include="NSwag.MSBuild">
