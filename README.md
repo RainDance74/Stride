@@ -6,6 +6,18 @@ Stride is a todo application built using ASP.NET Core for the backend and React 
 
 The easiest way to build Stride is with Docker. Simply run `docker compose up` to build the application. However, this won't display anything on your local machine.
 
+Before of building it, you should first install certificates on your local machine. Why? [Because](https://github.com/microsoft/dotnet-framework-docker/issues/799).
+
+**With Visual Studio**
+
+In case if you have Visual Studio installed, you can just open it and install certificate from it. If you did it, go to **Launching Docker Compose** section.
+
+**Without Visual Studio**
+
+You can configure certificates using `dotnet dev-certs tool`. To do it, please follow [official documentation](https://learn.microsoft.com/ru-ru/aspnet/core/security/docker-https?view=aspnetcore-8.0). You'll have to add required params, like `ASPNETCORE_Kestrel__Certificates__Default__Password` and `ASPNETCORE_Kestrel__Certificates__Default__Path` in your `docker compose up` command.
+
+**Launching Docker Compose**
+
 To access the backend and Swagger UI from your local PC, follow these instructions:
 
 **Linux & macOS:**
