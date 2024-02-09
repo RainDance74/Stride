@@ -1,6 +1,7 @@
 ﻿using Stride.Application;
 using Stride.Infrastructure;
 using Stride.Infrastructure.Data;
+using Stride.Infrastructure.Identity;
 using Stride.Web;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -27,11 +28,11 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseSwaggerUi(settings =>
-{
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
-});
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapFallbackToFile("index.html");
 
@@ -39,7 +40,11 @@ app.UseExceptionHandler(opt => { });
 
 app.Map("/", () => Results.Redirect("/api"));
 
-app.MapEndpoints();
+app.MapControllers();
+
+app.MapGroup("/api/Users")
+   .WithTags("Users")
+   .MapIdentityApi<ApplicationUser>();
 
 app.Run();
 

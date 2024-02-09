@@ -1,11 +1,10 @@
-﻿using NSwag;
-using NSwag.Generation.Processors.Security;
+﻿using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+
+using Microsoft.OpenApi.Models;
 
 using Stride.Application.Common.Interfaces;
 using Stride.Infrastructure.Data;
 using Stride.Web.Services;
-
-using ZymLabs.NSwag.FluentValidation;
 
 namespace Stride.Web;
 
@@ -22,38 +21,44 @@ public static class DependencyInjection
 
         services.AddExceptionHandler<CustomExceptionHandler>();
 
-        services.AddScoped(provider =>
-        {
-            IEnumerable<FluentValidationRule>? validationRules = provider.GetService<IEnumerable<FluentValidationRule>>();
-            ILoggerFactory? loggerFactory = provider.GetService<ILoggerFactory>();
-
-            return new FluentValidationSchemaProcessor(provider, validationRules, loggerFactory);
-        });
-
+        services.AddControllers();
         services.AddEndpointsApiExplorer();
 
-        services.AddOpenApiDocument((configure, sp) =>
+        services.AddSwaggerGen(configure =>
         {
-            configure.Title = "Stride API";
-
+            configure.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Stride API", Version = "v1" });
 
             // Add the fluent validations schema processor
-            FluentValidationSchemaProcessor fluentValidationSchemaProcessor =
-                sp.CreateScope().ServiceProvider.GetRequiredService<FluentValidationSchemaProcessor>();
 
-            configure.SchemaSettings.SchemaProcessors.Add(fluentValidationSchemaProcessor);
 
             // Add JWT
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            configure.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
             {
-                Type = OpenApiSecuritySchemeType.ApiKey,
+                In = ParameterLocation.Header,
+                Description = "Please enter a valid token.",
                 Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = "bearer"
             });
 
-            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            configure.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+            {
+                {
+                    new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type=ReferenceType.SecurityScheme,
+                            Id="Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
+
+        services.AddFluentValidationRulesToSwagger();
 
         return services;
     }
