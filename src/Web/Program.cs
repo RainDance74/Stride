@@ -40,6 +40,8 @@ app.UseExceptionHandler(opt => { });
 
 app.Map("/", () => Results.Redirect("/api"));
 
+app.UseCors();
+
 app.MapControllers();
 
 app.MapGroup("/api/Users")

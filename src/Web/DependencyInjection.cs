@@ -16,6 +16,18 @@ public static class DependencyInjection
 
         services.AddHttpContextAccessor();
 
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
